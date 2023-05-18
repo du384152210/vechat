@@ -1,0 +1,54 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+a {
+	text-decoration: none;
+}
+ul ol {
+	list-style: none;
+}
+img {
+	vertical-align: middle;
+}
+.flex {
+	display: flex;
+}
+.f-j-s {
+	justify-content: space-between;
+}
+.f-j-c {
+	justify-content: center;
+}
+.f-a-c {
+	align-items: center;
+}
+.t-c {
+	text-align: center;
+}
+.fs-16 {
+	font-size: 16px;
+}
+.fs-18 {
+	font-size: 18px;
+}
+.fs-20 {
+	font-size: 20px;
+}
+.fs-28 {
+	font-size: 28px;
+}
+
+.c-9 {
+	color: #999999;
+}
+.c-d {
+	color: #dddddd;
+}
+
+.mt-6 {
+	margin-top: 6px;
+}
+.mt-40 {
+	margin-top: 40px;
+}
