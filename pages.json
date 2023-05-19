@@ -3,7 +3,7 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -14,13 +14,51 @@
                 "enablePullDownRefresh": false
             }
             
-        }
-        ,{
+        },
+		{
             "path" : "pages/login/login",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/chat/chat",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "navigationStyle": "custom"
+		    }
+		    
+		}
+        ,{
+            "path" : "pages/search/search",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+            }
+            
+        }
+        ,{
+            "path" : "pages/make_friends/make_friends",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+            }
+            
+        },{
+            "path" : "pages/apply/apply",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+				"navigationStyle": "custom"
             }
             
         }
@@ -31,5 +69,18 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"tabBar": {
+		"borderStyle": "#dddddd",
+		"selectedColor": "#000000",
+		"color": "#ccc",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "/static/images/icon1.png",
+				"selectedIconPath": "/static/images/icon1.png",
+				"text": "聊天"
+			}
+		]
+	}
 }

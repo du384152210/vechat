@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="overflow: hidden;">
 		<view class="t-c mt-40">
 			<img src="/static/images/logo.png" alt="" class="logo">
 		</view>
