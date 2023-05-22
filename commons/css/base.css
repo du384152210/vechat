@@ -37,25 +37,25 @@ uni-app, uni-page, uni-page-wrapper, uni-page-body {
 	text-align: center;
 }
 .fs-12 {
-	font-size: 12px;
+	font-size: 24rpx;
 }
 .fs-14 {
-	font-size: 14px;
+	font-size: 28rpx;
 }
 .fs-16 {
-	font-size: 16px;
+	font-size: 32rpx;
 }
 .fs-18 {
-	font-size: 18px;
+	font-size: 36rpx;
 }
 .fs-20 {
-	font-size: 20px;
+	font-size: 40rpx;
 }
 .fs-26 {
-	font-size: 26px;
+	font-size: 52rpx;
 }
 .fs-28 {
-	font-size: 28px;
+	font-size: 56rpx;
 }
 .fw-b {
 	font-weight: bold;
@@ -73,6 +73,9 @@ uni-app, uni-page, uni-page-wrapper, uni-page-body {
 .c-4a {
 	color: #4AAAFF!important;
 }
+.c-ff5 {
+	color: #FF5D5B!important;
+}
 
 .bg-ffe {
 	background: #FFE431;
@@ -85,38 +88,44 @@ uni-app, uni-page, uni-page-wrapper, uni-page-body {
 }
 
 .mt-6 {
-	margin-top: 6px;
+	margin-top: 12rpx;
 }
 .mt-10 {
-	margin-top: 10px;
+	margin-top: 20rpx;
 }
 .mt-20 {
-	margin-top: 20px;
+	margin-top: 40rpx;
 }
 .mt-24 {
-	margin-top: 24px;
+	margin-top: 48rpx;
 }
 .mt-30 {
-	margin-top: 30px;
+	margin-top: 60rpx;
 }
 .mt-40 {
-	margin-top: 40px;
+	margin-top: 80rpx;
 }
 .ml-10 {
-	margin-left: 10px;
+	margin-left: 20rpx;
 }
 .ml-12 {
-	margin-left: 12px;
+	margin-left: 24rpx;
 }
 .ml-20 {
-	margin-left: 20px;
+	margin-left: 40rpx;
 }
 .mr-10 {
-	margin-right: 10px;
+	margin-right: 20rpx;
 }
 .mr-16 {
-	margin-right: 16px;
+	margin-right: 32rpx;
 }
 .mb-20 {
-	margin-bottom: 20px;
+	margin-bottom: 40rpx;
+}
+
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
