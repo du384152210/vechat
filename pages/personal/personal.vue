@@ -54,14 +54,23 @@
 </template>
 
 <script>
+	import { _my } from '../../API/myApi.js'
 	export default {
 		data() {
 			return {
 				
 			}
 		},
+		onLoad() {
+			this.getData()
+		},
 		methods: {
-			
+			async getData() {
+				const [err, data] = await this.$http({..._my, data: {
+					email: 'jack@qq.com'
+				}})
+				console.log(data)
+			}
 		}
 	}
 </script>
