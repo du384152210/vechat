@@ -1,8 +1,8 @@
 <template>
 	<view class="box">
-		<img src="/static/images/bg.png" alt="" class="bg_img">
+		<image src="/static/images/avatar.png" alt="" class="bg_img" mode="aspectFill" />
 		<view class="flex f-a-c f-j-s top">
-			<view class="back"></view>
+			<view class="back" @click="back"></view>
 			<img src="/static/images/menu.png" alt="" class="menu">
 		</view>
 		<view class="t-c mt-30">
@@ -16,7 +16,21 @@
 			<view class="fs-14">昵称：很好搭档</view>
 			<view class="mt-10 des">夜，结束了一天的喧嚣后安静下来，伴随着远处路灯那微弱的光。风，毫无预兆地席卷整片旷野，撩动人的思绪万千。</view>
 		</view>
-		<view class="btn fs-16">加为好友</view>
+		<view class="btn fs-16" @tap="addFriendAnimation('up')">加为好友</view>
+		
+		<view class="mask flex" :animation="animationData" style="bottom: -100%;">
+			<view class="bg-white container">
+				<view class="avatar_box">
+					<img src="/static/images/avatar.png" alt="" style="width:100%;height:100%;">
+				</view>
+				<view class="fs-26">hhhhhh</view>
+				<textarea name="" id="" class="mt-20" placeholder="打招呼~" placeholder-class="c-d"></textarea>
+				<view class="flex f-j-s btns">
+					<text class="btn1" @tap="addFriendAnimation('down')">取消</text>
+					<text class="btn2">发送</text>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -24,18 +38,36 @@
 	export default {
 		data() {
 			return {
-				
+				animationData:{}
 			}
 		},
 		methods: {
-			
+			back() {
+				uni.navigateBack()
+			},
+			addFriendAnimation(type) {
+				var animation = uni.createAnimation({
+				  duration: 500,
+				  timingFunction: "ease",
+				  delay: 0
+				})
+				if(type === 'up') {
+					animation.bottom(0).step()
+					
+				}else {
+					animation.bottom('-100%').step()
+				}
+				
+				this.animationData = animation.export()
+			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 .box {
-
+	position: relative;
+	overflow: hidden;
 }
 .bg_img {
 	z-index: -1;
@@ -44,53 +76,101 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	opacity: .2;
+	filter: blur(16px);
 }
 .top {
-	padding: 10px 12px;
+	padding: 20rpx 24rpx;
 	.back {
-		width: 14px;
-		height: 14px;
-		border-top: 2px solid #000;
-		border-left: 2px solid #000;
+		width: 28rpx;
+		height: 28rpx;
+		border-top: 4rpx solid #000;
+		border-left: 4rpx solid #000;
 		transform: rotate(-45deg);
 	}
 	.menu {
-		width: 32px;
-		height: 32px;
+		width: 64rpx;
+		height: 64rpx;
 	}
 }
 .img_box {
 	position: relative;
 	overflow: hidden;
 	display: inline-block;
-	width: 200px;
-	height: 200px;
-	border-radius: 24px;
-	border: 3px solid #fff;
+	width: 400rpx;
+	height: 400rpx;
+	border-radius: 48rpx;
+	border: 6rpx solid #fff;
 }
 .sex {
 	position: absolute;
-	right: 8px;
-	bottom: 8px;
-	width: 32px;
-	height: 32px;
+	right: 16rpx;
+	bottom: 16rpx;
+	width: 64rpx;
+	height: 64rpx;
 	border-radius: 50%;
 	background: $uni-color-error;
 }
 .des {
 	text-align: justify;
-	padding: 0 50px;
+	padding: 0 100rpx;
 }
 .btn {
 	position: fixed;
-	bottom: 4px;
+	bottom: 8rpx;
 	left: 50%;
 	transform: translate3d(-50%,0,0);
-	width: 342px;
-	padding: 9px 0;
+	width: 682rpx;
+	padding: 18rpx 0;
 	text-align: center;
 	background: $uni-color-warning;
-	border-radius: 5px;
+	border-radius: 10rpx;
+}
+.mask {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	align-items: flex-end;
+	.container {
+		width: 100%;
+		position: relative;
+		border-radius: 40rpx 40rpx 0 0;
+		padding: 168rpx 32rpx 8rpx;
+		.avatar_box {
+			position: absolute;
+			left: 60rpx;
+			top: 0;
+			transform: translate3d(0, -50%, 0);
+			width: 240rpx;
+			height: 240rpx;
+			border: 6rpx solid #fff;
+			border-radius: 50%;
+			overflow: hidden;
+		}
+		textarea {
+			width: 100%;
+			border-radius: 20rpx;
+			padding: 20rpx;
+			font-size: 32rpx;
+			background: #F3F4F6;
+			height: 520rpx;
+		}
+		.btns {
+			margin-top: 90rpx;
+			text {
+				padding: 18rpx 0;
+				border-radius: 10rpx;
+				font-size: 32rpx;
+				text-align: center;
+			}
+			.btn1 {
+				width: 172rpx;
+				background: #ccc;
+			}
+			.btn2 {
+				width: 480rpx;
+				background: $uni-color-warning;
+			}
+		}
+	}
 }
 </style>

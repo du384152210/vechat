@@ -3,17 +3,17 @@
 		<view class="navigationBarTitle flex f-j-s f-a-c">
 			<view class="back" @click="back"></view>
 			<text class="fs-20">开心就好</text>
-			<img src="" alt="" class="avatar">
+			<img src="/static/images/avatar.png" alt="" class="avatar">
 		</view>
 		<scroll-view scroll-y="true" class="content">
 			<view class="fs-12 c-9 mb-20 t-c">11月14日 14:23</view>
 			<view class="other flex row">
-				<img src="" alt="" class="avatar mr-10">
+				<img src="/static/images/avatar.png" alt="" class="avatar mr-10">
 				<text class="msg">阿三大苏打撒旦是顶顶顶顶顶顶顶顶顶顶顶顶顶</text>
 			</view>
 			<view class="my flex row">
 				<text class="msg">撒大苏打实打实大苏打实打实打算</text>
-				<img src="" alt="" class="avatar ml-10">
+				<img src="/static/images/avatar.png" alt="" class="avatar ml-10">
 			</view>
 		</scroll-view>
 		<view class="input_box flex f-a-c">
@@ -42,69 +42,69 @@
 
 <style lang="scss">
 .navigationBarTitle {
-	padding: 6px 12px;
-	border-bottom: 1px solid #dddddd;
+	padding: 12rpx 24rpx;
+	border-bottom: 2rpx solid #dddddd;
 	.back {
-		width: 14px;
-		height: 14px;
-		border-top: 2px solid #ccc;
-		border-left: 2px solid #ccc;
+		width: 28rpx;
+		height: 28rpx;
+		border-top: 4rpx solid #ccc;
+		border-left: 4rpx solid #ccc;
 		transform: rotate(-45deg);
 	}
 	.avatar {
-		width: 34px;
-		height: 34px;
-		border-radius: 8px;
+		width: 68rpx;
+		height: 68rpx;
+		border-radius: 16rpx;
 	}
 }
 .content {
-	height: calc(100% - 96px);
+	height: calc(100% - 192rpx);
 	background: #f5f5f5;
-	padding: 16px 16px 0;
+	padding: 32rpx 32rpx 0;
 	.row {
 		align-items: flex-start;
-		margin-top: 20px;
+		margin-top: 40rpx;
 		.avatar {
-			width: 40px;
-			height: 40px;
-			border-radius: 10px;
+			width: 80rpx;
+			height: 80rpx;
+			border-radius: 20rpx;
 		}
 		.msg {
-			max-width: 240px;
-			padding: 8px 12px;
-			font-size: 16px;
+			max-width: 480rpx;
+			padding: 16rpx 24rpx;
+			font-size: 32rpx;
 			color: #000;
 		}
 	}
 	.other {
 		.msg {
-			border-radius: 0 10px 10px 10px;
+			border-radius: 0 20rpx 20rpx 20rpx;
 			background: #fff;
 		}
 	}
 	.my {
 		justify-content: flex-end;
 		.msg {
-			border-radius: 10px 0 10px 10px;
+			border-radius: 20rpx 0 20rpx 20rpx;
 			background: #FFE431;
 		}
 	}
 }
 .input_box {
-	padding: 6px 18px;
+	padding: 12rpx 36rpx;
 	background: #f5f5f5;
-	border-top: 1px solid #dddddd;
+	border-top: 2rpx solid #dddddd;
 	input {
 		background: #ffff;
-		height: 36px;
-		border-radius: 5px;
-		padding: 0 10px;
-		line-height: 36px;
-		font-size: 14px;
+		height: 72rpx;
+		border-radius: 10rpx;
+		padding: 0 20rpx;
+		line-height: 72rpx;
+		font-size: 28rpx;
 	}
 	.icon {
-		width: 28px;
-		height: 28px;
+		width: 56rpx;
+		height: 56rpx;
 	}
 }
 </style>

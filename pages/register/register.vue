@@ -44,33 +44,33 @@
 
 <style lang="scss">
 .logo {
-	width: 96px;
-	height: 46px;
+	width: 192rpx;
+	height: 92rpx;
 }
 .form {
-	padding: 26px 28px 0;
+	padding: 52rpx 56rpx 0;
 	.formItem {
-		margin-top: 30px;
+		margin-top: 60rpx;
 		position: relative;
 		.input {
-			padding: 8px 30px 8px 0;
-			font-size: 18px;
-			border-bottom: 1px solid $uni-border-color;
+			padding: 16rpx 60rpx 16rpx 0;
+			font-size: 36rpx;
+			border-bottom: 2rpx solid $uni-border-color;
 		}
 		.icon {
 			position: absolute;
 			right: 0;
-			top: 8px;
-			width: 28px;
-			height: 28px;
+			top: 16rpx;
+			width: 56rpx;
+			height: 56rpx;
 		}
 	}
 	.btn {
-		margin: 58px auto 0;
-		width: 260px;
-		padding: 13px 0;
+		margin: 116rpx auto 0;
+		width: 320rpx;
+		padding: 26rpx 0;
 		background: #ccc;
-		border-radius: 24px;
+		border-radius: 48rpx;
 		color: #fff;
 	}
 	.btn.active {

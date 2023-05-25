@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<view class="flex top f-a-c f-j-s">
-			<img src="" alt="" class="top_avatar">
+			<img src="/static/images/avatar.png" alt="" class="top_avatar">
 			<img src="/static/images/index_logo.png" alt="" class="idx_logo">
 			<view class="flex f-a-c">
 				<img src="/static/images/search.png" alt="" class="icon" @click="toSearch">
@@ -11,7 +11,7 @@
 		<scroll-view scroll-y class="list">
 			<view class="item flex f-a-c" @click="toChat">
 				<view style="position: relative;" class="mr-16">
-					<img src="" alt="" class="list_avatar">
+					<img src="/static/images/avatar.png" alt="" class="list_avatar">
 					<text class="num">2</text>
 				</view>
 				<view class="flex1">
@@ -55,44 +55,44 @@
 <style lang="scss">
 .top {
 	position: relative;
-	padding: 4px 16px;
-	border-bottom: 1px solid #dddddd;
+	padding: 8rpx 32rpx;
+	border-bottom: 2rpx solid #dddddd;
 	.idx_logo {
 		position: absolute;
 		left: 50%;
 		transform: translate3d(-50%, 0, 0);
-		width: 44px;
-		height: 21px;
+		width: 80rpx;
+		height: 42rpx;
 	}
 	.top_avatar {
-		width: 34px;
-		height: 34px;
-		border-radius: 8px;
+		width: 68rpx;
+		height: 68rpx;
+		border-radius: 16rpx;
 	}
 	
 	.icon {
-		width: 26px;
-		height: 26px;
+		width: 52rpx;
+		height: 52rpx;
 	}
 }
 
 .list {
-	height: calc(100% - 43px);
+	height: calc(100% - 86rpx);
 	.item {
-		padding: 10px 16px;
+		padding: 20rpx 32rpx;
 		.list_avatar {
-			width: 48px;
-			height: 48px;
-			border-radius: 12px;
+			width: 96rpx;
+			height: 96rpx;
+			border-radius: 24rpx;
 		}
 		.num {
 			position: absolute;
 			top: 0;
 			right: 0;
 			transform: translate3d(50%,-50%,0);
-			padding: 0 5px;
+			padding: 0 10rpx;
 			background: $uni-color-error;
-			font-size: 12px;
+			font-size: 24rpx;
 			color: #fff;
 			border-radius: 50%;
 		}

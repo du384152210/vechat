@@ -10,12 +10,12 @@
 				<view class="fs-20 fw-b">用户</view>
 				<view>
 					<view class="search_row flex f-a-c">
-						<img src="" alt="" class="avatar">
+						<img src="/static/images/avatar.png" alt="" class="avatar">
 						<text class="fs-18 flex1">asdasda</text>
 						<view class="btn bg-ffe">发信息</view>
 					</view>
 					<view class="search_row flex f-a-c">
-						<img src="" alt="" class="avatar">
+						<img src="/static/images/avatar.png" alt="" class="avatar">
 						<text class="fs-18 flex1">asdasda</text>
 						<view class="btn bg-4a-10 c-4a">加好友</view>
 					</view>
@@ -25,12 +25,12 @@
 				<view class="fs-20 fw-b">群组</view>
 				<view>
 					<view class="search_row flex f-a-c">
-						<img src="" alt="" class="avatar">
+						<img src="/static/images/avatar.png" alt="" class="avatar">
 						<text class="fs-18 flex1">asdasda</text>
 						<view class="btn bg-ffe">发信息</view>
 					</view>
 					<view class="search_row flex f-a-c">
-						<img src="" alt="" class="avatar">
+						<img src="/static/images/avatar.png" alt="" class="avatar">
 						<text class="fs-18 flex1">asdasda</text>
 						<view class="btn bg-4a-10 c-4a">加好友</view>
 					</view>
@@ -58,39 +58,39 @@
 <style lang="scss">
 .search {
 	position: relative;
-	padding: 7px 18px;
-	border-bottom: 1px solid #dddddd;
+	padding: 14rpx 36rpx;
+	border-bottom: 2rpx solid #dddddd;
 	input {
-		height: 30px;
-		margin-right: 15px;
-		border-radius: 5px;
+		height: 60rpx;
+		margin-right: 30rpx;
+		border-radius: 10rpx;
 		background: #F3F4F6;
-		padding: 0 35px 0 15px;
-		line-height: 30px;
+		padding: 0 70rpx 0 30rpx;
+		line-height: 60rpx;
 	}
 	.search_btn {
 		position: absolute;
-		width: 20px;
-		height: 20px;
-		right: 70px;
+		width: 40rpx;
+		height: 40rpx;
+		right: 140rpx;
 		top: 50%;
 		transform: translate3d(0, -50%, 0);
 	}
 }
 .search_list {
-	height: calc(100% - 45px);
+	height: calc(100% - 90rpx);
 	.search_row {
-		padding: 10px 0;
+		padding: 20rpx 0;
 		.avatar {
-			width: 40px;
-			height: 40px;
-			border-radius: 10px;
-			margin-right: 16px;
+			width: 80rpx;
+			height: 80rpx;
+			border-radius: 20rpx;
+			margin-right: 32rpx;
 		}
 		.btn {
-			padding: 4px 12px;
-			border-radius: 12px;
-			font-size: 12px;
+			padding: 8rpx 24rpx;
+			border-radius: 24rpx;
+			font-size: 24rpx;
 		}
 	}
 }

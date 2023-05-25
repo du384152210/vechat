@@ -39,31 +39,31 @@
 
 <style lang="scss">
 	.top {
-		padding: 10px 28px;
+		padding: 20rpx 56rpx;
 	}
 	.close {
-		width: 20px;
-		height: 20px;
+		width: 40rpx;
+		height: 40rpx;
 	}
 	.logo {
-		width: 96px;
-		height: 46px;
+		width: 192rpx;
+		height: 92rpx;
 	}
 	.form {
-		padding: 26px 28px 0;
+		padding: 52rpx 56rpx 0;
 		.input {
-			margin-top: 30px;
-			padding: 8px 0;
-			font-size: 18px;
-			border-bottom: 1px solid $uni-border-color;
+			margin-top: 60rpx;
+			padding: 16rpx 0;
+			font-size: 36rpx;
+			border-bottom: 2rpx solid $uni-border-color;
 		}
 	}
 	.btn {
-		margin: 58px auto 0;
-		width: 260px;
-		padding: 13px 0;
+		margin: 116rpx auto 0;
+		width: 520rpx;
+		padding: 26rpx 0;
 		background: $uni-color-warning;
-		border-radius: 24px;
-		box-shadow: 0px 25px 16px -18px rgba(255,228,49,0.4);
+		border-radius: 48rpx;
+		box-shadow: 0px 50rpx 32rpx -36rpx rgba(255,228,49,0.4);
 	}
 </style>
