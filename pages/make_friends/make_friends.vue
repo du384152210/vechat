@@ -1,13 +1,13 @@
 <template>
-	<view class="box">
+	<view class="box" :animation="animationData4">
 		<image src="/static/images/avatar.png" alt="" class="bg_img" mode="aspectFill" />
 		<view class="flex f-a-c f-j-s top">
 			<view class="back" @click="back"></view>
 			<img src="/static/images/menu.png" alt="" class="menu">
 		</view>
 		<view class="t-c mt-30">
-			<view class="img_box">
-				<img src="/static/images/avatar.png" alt="" style="width: 100%;height:100%;">
+			<view class="img_box" :animation="animationData2">
+				<img src="/static/images/avatar.png" alt="" style="width: 100%;height:100%;" >
 				<view class="sex flex f-a-c f-j-c">
 					<img src="/static/images/sexFemale.png" alt="" style="width: 90%;height:90%;">
 				</view>
@@ -20,7 +20,7 @@
 		
 		<view class="mask flex" :animation="animationData" style="bottom: -100%;">
 			<view class="bg-white container">
-				<view class="avatar_box">
+				<view class="avatar_box" :animation="animationData3">
 					<img src="/static/images/avatar.png" alt="" style="width:100%;height:100%;">
 				</view>
 				<view class="fs-26">hhhhhh</view>
@@ -38,7 +38,10 @@
 	export default {
 		data() {
 			return {
-				animationData:{}
+				animationData:{},
+				animationData2: {},
+				animationData3: {},
+				animationData4: {}
 			}
 		},
 		methods: {
@@ -46,19 +49,33 @@
 				uni.navigateBack()
 			},
 			addFriendAnimation(type) {
-				var animation = uni.createAnimation({
-				  duration: 500,
-				  timingFunction: "ease",
-				  delay: 0
-				})
+				let animation = this.initAnimation(0)
+				let animation2 = this.initAnimation(0)
+				let animation3 = this.initAnimation(300)
+				let animation4 = this.initAnimation(0)
 				if(type === 'up') {
 					animation.bottom(0).step()
-					
+					animation2.opacity(0).step()
+					animation3.opacity(1).step()
+					animation4.backgroundColor('rgba(255,228,49,.6)').step()
 				}else {
 					animation.bottom('-100%').step()
+					animation2.opacity(1).step()
+					animation3.opacity(0).step()
+					animation4.backgroundColor('rgba(255,228,49,0)').step()
 				}
 				
 				this.animationData = animation.export()
+				this.animationData2 = animation2.export()
+				this.animationData3 = animation3.export()
+				this.animationData4 = animation4.export()
+			},
+			initAnimation(delay) {
+				return uni.createAnimation({
+					duration: 500,
+					timingFunction: "ease",
+					delay
+				})
 			}
 		}
 	}
@@ -93,6 +110,7 @@
 	}
 }
 .img_box {
+	z-index: 9999;
 	position: relative;
 	overflow: hidden;
 	display: inline-block;
@@ -113,6 +131,7 @@
 .des {
 	text-align: justify;
 	padding: 0 100rpx;
+	font-size: 24rpx;
 }
 .btn {
 	position: fixed;
@@ -136,6 +155,7 @@
 		border-radius: 40rpx 40rpx 0 0;
 		padding: 168rpx 32rpx 8rpx;
 		.avatar_box {
+			opacity: 0;
 			position: absolute;
 			left: 60rpx;
 			top: 0;

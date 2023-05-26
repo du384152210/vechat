@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<view class="nav">
-			<view class="flex row f-j-s f-a-c" style="padding:20rpx 32rpx;">
+			<view class="flex row f-j-s f-a-c" style="padding:20rpx 32rpx;" @click="updateAvatar">
 				<view class="flex f-a-c">
 					<text class="fs-16">头像</text>
 					<img src="/static/images/avatar.png" alt="" class="avatar">
@@ -51,6 +51,7 @@
 		</view>
 		<view class="c-ff5 fs-16 t-c mt-40">退出应用</view>
 	</view>
+	<ksp-cropper mode="free" :width="200" :height="140" :maxWidth="1024" :maxHeight="1024" :url="url" @cancel="oncancel" @ok="onok"></ksp-cropper>
 </template>
 
 <script>
@@ -58,13 +59,34 @@
 	export default {
 		data() {
 			return {
-				
+				url: ''
 			}
 		},
 		onLoad() {
-			this.getData()
+			// this.getData()
 		},
 		methods: {
+			updateAvatar() {
+				uni.chooseMedia({
+				  count: 1,
+				  mediaType: ['image'],
+				  sourceType: ['album', 'camera'],
+				  maxDuration: 30,
+				  camera: 'back',
+				  success: (res)=> {
+					console.log(res)
+				    this.url = res.tempFiles[0].tempFilePath;
+				  }
+				})
+			},
+			onok(ev) {
+			    this.url = "";
+			    this.path = ev.path;
+			},
+			oncancel() {
+			    // url设置为空，隐藏控件
+			    this.url = "";
+			},
 			async getData() {
 				const [err, data] = await this.$http({..._my, data: {
 					email: 'jack@qq.com'

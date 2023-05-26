@@ -1,5 +1,5 @@
 <template>
-	<view class="box">
+	<view class="box" style="padding-top:  var(--status-bar-height)">
 		<view class="flex top f-a-c f-j-s">
 			<img src="/static/images/avatar.png" alt="" class="top_avatar">
 			<img src="/static/images/index_logo.png" alt="" class="idx_logo">
