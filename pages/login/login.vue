@@ -1,9 +1,5 @@
 <template>
 	<view>
-		<view class="top flex f-j-s f-a-c">
-			<img src="/static/images/close.png" alt="" class="close">
-			<text class="fs-18" @click="toRegister">注册</text>
-		</view>
 		<view class="t-c mt-40">
 			<img src="/static/images/logo.png" alt="" class="logo">
 		</view>
@@ -13,6 +9,7 @@
 			<input type="text" placeholder="请输入账号" class="input" placeholder-class="c-d">
 			<input type="password" placeholder="请输入密码" class="input" placeholder-class="c-d">
 			<view class="btn fs-16 t-c">登录</view>
+			<view class="t-c mt-24" @tap="toRegister">还没账号? <text class="c-4a">前往注册</text></view>
 		</view>
 	</view>
 </template>

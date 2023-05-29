@@ -32,3 +32,13 @@ const formatDate = (d) => {
 	}
 	
 }
+
+const showToast = (title, type) => {
+	uni.showToast({
+		title,
+		icon: !type ? 'none' : ''
+	})
+}
+export {
+	showToast
+}

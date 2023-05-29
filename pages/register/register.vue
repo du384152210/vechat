@@ -15,12 +15,14 @@
 				<img src="/static/images/eye_on.png" alt="" class="icon" v-if="!showPassword" @click="changePasType">
 				<img src="/static/images/eye_off.png" alt="" class="icon" v-else @click="changePasType">
 			</view>
-			<view :class="{'btn fs-16 t-c': true, 'active': emailCheck && password}">注册</view>
+			<view :class="{'btn fs-16 t-c': true, 'active': emailCheck && password}" @tap="onSubmit">注册</view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { _register } from '../../API/loginApi.js'
+	import { showToast } from '../../utils/util.js'
 	export default {
 		data() {
 			return {
@@ -38,6 +40,29 @@
 			changePasType() {
 				this.showPassword = !this.showPassword
 			},
+			onSubmit() {
+				if(!this.emailCheck) {
+					return showToast('请输入正确的邮箱');
+				}else if(!this.password) {
+					return showToast('请输入密码');
+				}else {
+					this.register();
+				}
+			},
+			async register() {
+				const [err, data] = await this.$http({..._register, data: {
+					email: this.email,
+					password: this.password
+				}})
+				if(data.status === 200) {
+					uni.showToast({
+						title: data.message
+					})
+					setTimeout(()=> {
+						uni.navigateBack()	
+					},800)
+				}
+			}
 		}
 	}
 </script>

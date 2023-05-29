@@ -24,7 +24,7 @@ const http = (obj) => {
             break;
           case 400: 
             uni.showToast({
-              title: res.data.msg,
+              title: res.data.message,
               icon: 'none'
             })
           default: 
