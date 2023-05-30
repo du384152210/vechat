@@ -6,19 +6,23 @@
 		<view class="form">
 			<text class="fs-28">登录</text>
 			<view class="fs-20 c-9 mt-6">您好，欢迎来到vechat!</view>
-			<input type="text" placeholder="请输入账号" class="input" placeholder-class="c-d">
-			<input type="password" placeholder="请输入密码" class="input" placeholder-class="c-d">
-			<view class="btn fs-16 t-c">登录</view>
+			<input type="text" placeholder="请输入邮箱" class="input" placeholder-class="c-d" v-model="email">
+			<input type="password" placeholder="请输入密码" class="input" placeholder-class="c-d" v-model="password">
+			<view class="btn fs-16 t-c" @tap="submit">登录</view>
 			<view class="t-c mt-24" @tap="toRegister">还没账号? <text class="c-4a">前往注册</text></view>
 		</view>
 	</view>
 </template>
 
 <script>
+	import { showToast } from '../../utils/util.js'
+	import { _login } from '../../API/loginApi.js'
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				email: '',
+				password: '',
+				emailReg: /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/
 			}
 		},
 		onLoad() {
@@ -30,6 +34,26 @@
 					url: '/pages/register/register'
 				})
 			},
+			submit() {
+				if(!this.email) {
+					return showToast('请输入邮箱地址！')
+				}else if(!this.emailReg.test(this.email)) {
+					return showToast('请输入正确的邮箱地址！')
+				}else if(!this.password) {
+					return showToast('请输入密码！')
+				}else {
+					this.login();
+				}
+			},
+			async login() {
+				const [err, data] = await this.$http({..._login, data: {
+					email: this.email,
+					password: this.password
+				}})
+				if(data.status === 200) {
+					showToast(data.message, 1);
+				}
+			}
 		}
 	}
 </script>

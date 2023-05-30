@@ -1,7 +1,6 @@
 const base_url = 'http://localhost:3000';
 
 const http = (obj) => {
-	console.log(obj)
   return new Promise((resolve, reject) => {
     if(!obj.hideLoading) {
       uni.showLoading({
