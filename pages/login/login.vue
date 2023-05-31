@@ -52,6 +52,10 @@
 				}})
 				if(data.status === 200) {
 					showToast(data.message, 1);
+					uni.setStorageSync('token', data.token);
+					setTimeout(()=> {
+						uni.navigateBack()
+					},500)
 				}
 			}
 		}
