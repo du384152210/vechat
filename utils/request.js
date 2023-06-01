@@ -26,6 +26,12 @@ const http = (obj) => {
               title: res.data.message,
               icon: 'none'
             })
+			break;
+		  case 401:
+		   uni.navigateTo({
+		   	url: '/pages/login/login'
+		   })
+		 	break;
           default: 
           resolve([null, res.data]);
             break;

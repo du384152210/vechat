@@ -20,8 +20,8 @@
 	export default {
 		data() {
 			return {
-				email: '',
-				password: '',
+				email: 'admin@g.com',
+				password: 'admin',
 				emailReg: /^[a-zA-Z0-9]+([-_.][A-Za-zd]+)*@([a-zA-Z0-9]+[-.])+[A-Za-zd]{2,5}$/
 			}
 		},

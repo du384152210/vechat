@@ -1,4 +1,4 @@
-const formatDate = (d) => {
+const compareDate = (d) => {
 	let old = new Date(d);
 	let now = new Date();
 	
@@ -33,6 +33,17 @@ const formatDate = (d) => {
 	
 }
 
+const formatDate = (d) => {
+	let time = new Date(d);
+	let h = time.getHours();
+	let m = time.getMinutes();
+	let s = time.getSeconds();
+	let Y = time.getFullYear();
+	let M = time.getMonth() + 1;
+	let D = time.getDate();
+	return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s
+}
+
 const showToast = (title, type) => {
 	uni.showToast({
 		title,
@@ -40,5 +51,6 @@ const showToast = (title, type) => {
 	})
 }
 export {
-	showToast
+	showToast,
+	formatDate
 }
