@@ -44,10 +44,17 @@ const formatDate = (d) => {
 	return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s
 }
 
-const showToast = (title, type) => {
+const showToast = (title, type, callback) => {
 	uni.showToast({
 		title,
-		icon: !type ? 'none' : ''
+		icon: !type ? 'none' : '',
+		success: () => {
+			if(callback && typeof callback === 'function') {
+				setTimeout(() => {
+					callback()
+				},500)
+			}
+		}
 	})
 }
 export {
