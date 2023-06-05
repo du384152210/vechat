@@ -28,12 +28,12 @@
 				<text class="flex1 ellipsis c-9">{{gender[detail.gender]}}</text>
 				<img src="/static/images/arrow.png" alt="" class="arrow">
 			</view>
-			<view class="flex row f-j-s f-a-c">
+			<view class="flex row f-j-s f-a-c" @tap="showPup('birthday')">
 				<text class="fs-16 mr-16">生日</text>
-				<text class="flex1 ellipsis c-9">{{detail.birthday}}</text>
+				<text class="flex1 ellipsis c-9" >{{detail.birthday}}</text>
 				<img src="/static/images/arrow.png" alt="" class="arrow">
 			</view>
-			<view class="flex row f-j-s f-a-c">
+			<view class="flex row f-j-s f-a-c" @tap="showPup('phone')">
 				<text class="fs-16 mr-16">电话</text>
 				<text class="flex1 ellipsis c-9">{{detail.phone}}</text>
 				<img src="/static/images/arrow.png" alt="" class="arrow">
@@ -41,7 +41,6 @@
 			<view class="flex row f-j-s f-a-c">
 				<text class="fs-16 mr-16">邮箱</text>
 				<text class="flex1 ellipsis c-9">{{detail.email}}</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
 			</view>
 			<view class="flex row f-j-s f-a-c">
 				<text class="fs-16 mr-16">密码</text>
@@ -66,7 +65,22 @@
 			</view>
 		</view>
 	</uni-popup>
-	
+	<uni-popup ref="birthday" background-color="#fff" type="bottom">
+		<view class="popup-content">
+			<view class="flex f-j-s top f-a-c">
+				<text class="title fw-b fs-18">设置生日</text>
+				<text @tap="closePup('birthday')">取消</text>
+				<view :class="{'btn': true, 'active': birthday && birthday !== detail.birthday}" @tap="pupSubmit('birthday')">完成</view>
+			</view>
+			<view class="input" style="padding-right:24rpx;">
+				<uni-datetime-picker
+					type="date"
+					:value="birthday"
+					@change="birthdayChange"
+				/>
+			</view>
+		</view>
+	</uni-popup>
 	<uni-popup ref="signature" background-color="#fff" type="bottom">
 		<view class="popup-content">
 			<view class="flex f-j-s top f-a-c">
@@ -74,9 +88,22 @@
 				<text @tap="closePup('signature')">取消</text>
 				<view :class="{'btn': true, 'active': signature && signature !== detail.signature}" @tap="pupSubmit('signature')">完成</view>
 			</view>
-			<view class="input">
+			<view class="input" >
 				<!-- <image src="/static/images/delete.png" class="clearBtn" v-if="signature" @tap="clearInput('signature')"></image> -->
 				<textarea type="text" :focus="foucus" v-model="signature"></textarea>
+			</view>
+		</view>
+	</uni-popup>
+	<uni-popup ref="phone" background-color="#fff" type="bottom">
+		<view class="popup-content">
+			<view class="flex f-j-s top f-a-c">
+				<text class="title fw-b fs-18">设置电话</text>
+				<text @tap="closePup('phone')">取消</text>
+				<view :class="{'btn': true, 'active': phone && phone !== detail.phone}" @tap="pupSubmit('phone')">完成</view>
+			</view>
+			<view class="input">
+				<image src="/static/images/delete.png" class="clearBtn" v-if="phone" @tap="clearInput('phone')"></image>
+				<input type="text" focus v-model="phone">
 			</view>
 		</view>
 	</uni-popup>
@@ -93,7 +120,10 @@
 				gender: ["保密", "男", "女"],
 				foucus: false,
 				nickName: '',
-				signature: ''
+				signature: '',
+				birthday: '',
+				phone: '',
+				phoneReg: /^1(3\d|4[5-9]|5[0-35-9]|6[567]|7[0-8]|8\d|9[0-35-9])\d{8}$/
 			}
 		},
 		computed() {
@@ -132,6 +162,7 @@
 			showPup(option) {
 				this.$refs[option].open()
 				this[option] = this.detail[option]
+				console.log(this[option])
 			},
 			closePup(option) {
 				this.$refs[option].close()
@@ -141,7 +172,13 @@
 			},
 			pupSubmit(option) {
 				if(!this[option] || this[option] === this.detail[option]) return
+				if(option === 'phone' && !this.phoneReg.test(this.phone)) {
+					return showToast('请输入正确的电话号码')
+				}
 				this.update(option);
+			},
+			birthdayChange(e) {
+				this.birthday = e
 			},
 			//-------------------------------api----------------------------------
 			async getData() {
@@ -167,7 +204,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.row {
 		padding: 32rpx;
 		border-bottom: 2rpx dashed #dddddd;
@@ -226,5 +263,8 @@
 			}
 		}
 		
+	}
+	.uni-calendar--ani-show {
+		transform: translateY(50px)!important;
 	}
 </style>
