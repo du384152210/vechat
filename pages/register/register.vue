@@ -42,9 +42,9 @@
 			},
 			onSubmit() {
 				if(!this.emailCheck) {
-					return showToast('请输入正确的邮箱');
+					return ;
 				}else if(!this.password) {
-					return showToast('请输入密码');
+					return;
 				}else {
 					this.register();
 				}

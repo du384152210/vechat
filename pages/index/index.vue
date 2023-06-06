@@ -152,7 +152,7 @@
 	.triangle {
 		position: absolute;
 		right: 16rpx;
-		top: -13rpx;
+		top: -10rpx;
 		border-right: 12rpx solid transparent;
 		border-bottom: 12rpx solid rgba(0, 0, 0, .6);
 		border-left: 12rpx solid transparent;

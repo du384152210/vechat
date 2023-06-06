@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<view class="search flex f-a-c">
-			<input type="text" class="flex1 fs-14" placeholder="邮箱/昵称" />
+			<input type="text" class="flex1 fs-14" placeholder="邮箱/昵称" v-model="keyword" @confirm="search"/>
 			<img src="/static/images/search.png" alt="" class="search_btn">
 			<text class="fs-14" @click="back">取消</text>
 		</view>
@@ -41,15 +41,21 @@
 </template>
 
 <script>
+	import { _search } from '../../API/search.js'
 	export default {
 		data() {
 			return {
-				
+				keyword: ''
 			}
 		},
 		methods: {
 			back() {
 				uni.navigateBack()
+			},
+			async search() {
+				const [err, data] = await this.$http({..._search, data: {
+					key: this.keyword
+				}})
 			}
 		}
 	}
