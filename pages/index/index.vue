@@ -1,17 +1,25 @@
 <template>
 	<view class="box" style="padding-top:  var(--status-bar-height)">
+		<view class="mask" v-if="isShow" @tap="hideAdd"></view>
 		<view class="flex top f-a-c f-j-s">
-			<img src="/static/images/avatar.png" alt="" class="top_avatar">
-			<img src="/static/images/index_logo.png" alt="" class="idx_logo">
-			<view class="flex f-a-c">
-				<img src="/static/images/search.png" alt="" class="icon" @click="toSearch">
-				<img src="/static/images/add.png" alt="" class="icon ml-20">
+			<image src="/static/images/avatar.png" alt="" class="top_avatar" />
+			<image src="/static/images/index_logo.png" alt="" class="idx_logo" />
+			<view class="flex f-a-c" style="position: relative;">
+				<image src="/static/images/search.png" alt="" class="icon" @tap="toSearch" />
+				<image src="/static/images/add.png" alt="" class="icon ml-20" @tap="showAdd"/>
+				<view class="tip" :animation="animationData">
+					<view class="triangle"></view>
+					<view class="flex f-a-c row" @tap="toAddFriendPage">
+						<image src="/static/images/normal-avatar.png" style="width:42rpx;height:42rpx;"></image>
+						<text class="c-white">添加朋友</text>
+					</view>
+				</view>
 			</view>
 		</view>
 		<scroll-view scroll-y class="list">
 			<view class="item flex f-a-c" @click="toChat">
 				<view style="position: relative;" class="mr-16">
-					<img src="/static/images/avatar.png" alt="" class="list_avatar">
+					<image src="/static/images/avatar.png" alt="" class="list_avatar" />
 					<text class="num">2</text>
 				</view>
 				<view class="flex1">
@@ -31,11 +39,16 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				animationData:{},
+				isShow: false
 			}
 		},
 		onLoad() {
 
+		},
+		onHide() {
+			this.hideAdd()
 		},
 		methods: {
 			toSearch() {
@@ -46,6 +59,35 @@
 			toChat() {
 				uni.navigateTo({
 					url:'/pages/chat/chat'
+				})
+			},
+			showAdd() {
+				this.isShow = true
+				this.addFriendAnimation('show')
+			},
+			hideAdd() {
+				this.isShow = false
+				this.addFriendAnimation('hide')
+			},
+			toAddFriendPage() {
+				uni.navigateTo({
+					url:'/pages/add_search/add_search'
+				})
+			},
+			addFriendAnimation(type) {
+				let animation = this.initAnimation(0)
+				if(type ==='show') {
+					animation.scale(1).step()
+				}else {
+					animation.scale(0).step()
+				}
+				this.animationData = animation.export()
+			},
+			initAnimation(delay) {
+				return uni.createAnimation({
+					duration: 300,
+					timingFunction: "ease",
+					delay
 				})
 			}
 		}
@@ -98,5 +140,29 @@
 		}
 	}
 }
-
+.tip {
+	transform: scale(0);
+	z-index: 999;
+	background: rgba(0, 0, 0, .7);
+	position: absolute;
+	top: 66rpx;
+	left: -74rpx;
+	font-size: 28rpx;
+	border-radius: 8rpx;
+	.triangle {
+		position: absolute;
+		right: 16rpx;
+		top: -13rpx;
+		border-right: 12rpx solid transparent;
+		border-bottom: 12rpx solid rgba(0, 0, 0, .6);
+		border-left: 12rpx solid transparent;
+	}
+	.row {
+		text {
+			margin-left: 16rpx;
+			white-space: nowrap;
+		}
+		padding: 12rpx 24rpx;
+	}
+}
 </style>
