@@ -4,7 +4,7 @@ body, html, page{
 	box-sizing: border-box;
 	height: 100vh;
 }
-view, scroll-view {
+view, scroll-view,textarea {
 	box-sizing: border-box;
 }
 a {

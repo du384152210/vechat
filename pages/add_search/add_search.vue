@@ -2,26 +2,22 @@
 	<view class="box">
 		<view class="search flex f-a-c">
 			<input type="text" class="flex1 fs-14" placeholder="邮箱/昵称" v-model="keyword" @confirm="search"/>
-			<img src="/static/images/search.png" alt="" class="search_btn">
+			<image src="/static/images/search.png" alt="" class="search_btn" />
+			<image src="/static/images/delete.png" class="clear_btn" v-show="keyword" @tap="handleClearInput"/>
 			<text class="fs-14" @click="back">取消</text>
 		</view>
 		<scroll-view scroll-y="true" class="search_list">
-			<view class="" style="padding: 17px 16px 0;">
-				<view class="fs-20 fw-b">用户</view>
+			<view class="" style="padding: 8rpx 32rpx 0;" v-if="type === 1">
 				<view>
-					<view class="search_row flex f-a-c">
-						<img src="/static/images/avatar.png" alt="" class="avatar">
-						<text class="fs-18 flex1">asdasda</text>
-						<view class="btn bg-ffe">发信息</view>
-					</view>
-					<view class="search_row flex f-a-c">
-						<img src="/static/images/avatar.png" alt="" class="avatar">
-						<text class="fs-18 flex1">asdasda</text>
-						<view class="btn bg-4a-10 c-4a">加好友</view>
+					<view class="search_row flex f-a-c" v-for="item in list" :key="item._id">
+						<img :src="item.avatar ? item.avatar : '/static/images/avatar.png'" alt="" class="avatar">
+						<text class="fs-16 flex1">{{item.nickName}}</text>
+						<view class="btn bg-ffe" v-if="item.state === 0">发信息</view>
+						<view class="btn bg-4a-10 c-4a" v-else @tap="toFriendDetail(item._id)">加好友</view>
 					</view>
 				</view>
 			</view>
-			<view class="" style="padding: 17px 16px 0;">
+			<view class="" style="padding: 17px 16px 0;" v-else>
 				<view class="fs-20 fw-b">群组</view>
 				<view>
 					<view class="search_row flex f-a-c">
@@ -45,17 +41,29 @@
 	export default {
 		data() {
 			return {
-				keyword: ''
+				keyword: '',
+				list: [],
+				type: 1
 			}
 		},
 		methods: {
 			back() {
 				uni.navigateBack()
 			},
+			handleClearInput() {
+				this.keyword = ''
+			},
+			toFriendDetail(id) {
+				uni.navigateTo({
+					url: `/pages/make_friends/make_friends?id=${id}`
+				})
+			},
 			async search() {
+				if(!this.keyword) return
 				const [err, data] = await this.$http({..._search, data: {
 					key: this.keyword
 				}})
+				this.list = data.list
 			}
 		}
 	}
@@ -71,14 +79,22 @@
 		margin-right: 30rpx;
 		border-radius: 10rpx;
 		background: #F3F4F6;
-		padding: 0 70rpx 0 30rpx;
+		padding: 0 80rpx 0 80rpx;
 		line-height: 60rpx;
+	}
+	.clear_btn {
+		position: absolute;
+		width: 30rpx;
+		height: 30rpx;
+		top: 50%;
+		transform: translate3d(0, -50%, 0);
+		right: 140rpx;
 	}
 	.search_btn {
 		position: absolute;
 		width: 40rpx;
 		height: 40rpx;
-		right: 140rpx;
+		left: 60rpx;
 		top: 50%;
 		transform: translate3d(0, -50%, 0);
 	}
@@ -87,6 +103,7 @@
 	height: calc(100% - 90rpx);
 	.search_row {
 		padding: 20rpx 0;
+		border-bottom: 2rpx dashed #dddddd;
 		.avatar {
 			width: 80rpx;
 			height: 80rpx;
@@ -98,6 +115,9 @@
 			border-radius: 24rpx;
 			font-size: 24rpx;
 		}
+	}
+	.search_row:last-child {
+		border-bottom: 0;
 	}
 }
 

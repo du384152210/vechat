@@ -1,29 +1,30 @@
 <template>
 	<view class="box" :animation="animationData4">
-		<image src="/static/images/avatar.png" alt="" class="bg_img" mode="aspectFill" />
+		<image :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" class="bg_img" mode="aspectFill" />
 		<view class="flex f-a-c f-j-s top">
 			<view class="back" @click="back"></view>
 			<img src="/static/images/menu.png" alt="" class="menu">
 		</view>
 		<view class="t-c mt-30">
 			<view class="img_box" :animation="animationData2">
-				<img src="/static/images/avatar.png" alt="" style="width: 100%;height:100%;" >
+				<image :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" style="width: 100%;height:100%;" />
 				<view class="sex flex f-a-c f-j-c">
-					<img src="/static/images/sexFemale.png" alt="" style="width: 90%;height:90%;">
+					<img src="/static/images/sexMale.png" alt="" style="width: 90%;height:90%;" v-if="detail.gender === 1">
+					<img src="/static/images/sexFemale.png" alt="" style="width: 90%;height:90%;" v-if="detail.gender === 2">
 				</view>
 			</view>
-			<view class="fs-26 mt-24">hhhhhh</view>
-			<view class="fs-14">昵称：很好搭档</view>
-			<view class="mt-10 des">夜，结束了一天的喧嚣后安静下来，伴随着远处路灯那微弱的光。风，毫无预兆地席卷整片旷野，撩动人的思绪万千。</view>
+			<view class="fs-26 mt-20">{{detail.nickName}}</view>
+			<view class="fs-14 mt-6">邮箱：{{detail.email}}</view>
+			<view class="mt-10 des">{{detail.signature ? detail.signature : ''}}</view>
 		</view>
 		<view class="btn fs-16" @tap="addFriendAnimation('up')">加为好友</view>
 		
-		<view class="mask flex" :animation="animationData" style="bottom: -100%;">
+		<view class="pupMask flex" :animation="animationData" style="bottom: -100%;">
 			<view class="bg-white container">
 				<view class="avatar_box" :animation="animationData3">
-					<img src="/static/images/avatar.png" alt="" style="width:100%;height:100%;">
+					<img :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" style="width:100%;height:100%;">
 				</view>
-				<view class="fs-26">hhhhhh</view>
+				<view class="fs-26">{{detail.nickName}}</view>
 				<textarea name="" id="" class="mt-20" placeholder="打招呼~" placeholder-class="c-d"></textarea>
 				<view class="flex f-j-s btns">
 					<text class="btn1" @tap="addFriendAnimation('down')">取消</text>
@@ -35,14 +36,21 @@
 </template>
 
 <script>
+	import { _detail } from '../../API/friendApi.js'
 	export default {
 		data() {
 			return {
+				userId: '',
+				detail: {},
 				animationData:{},
 				animationData2: {},
 				animationData3: {},
 				animationData4: {}
 			}
+		},
+		onLoad(option) {
+			this.userId = option.id
+			this.getDetail()
 		},
 		methods: {
 			back() {
@@ -76,7 +84,14 @@
 					timingFunction: "ease",
 					delay
 				})
-			}
+			},
+			//----------------------api---------------------
+			async getDetail() {
+				const [err, data] = await this.$http({..._detail, data: {
+					id: this.userId
+				}})
+				this.detail = data.detail
+			},
 		}
 	}
 </script>
@@ -144,7 +159,7 @@
 	background: $uni-color-warning;
 	border-radius: 10rpx;
 }
-.mask {
+.pupMask {
 	position: absolute;
 	width: 100%;
 	height: 100%;
