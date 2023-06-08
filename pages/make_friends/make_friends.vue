@@ -8,7 +8,7 @@
 		<view class="t-c mt-30">
 			<view class="img_box" :animation="animationData2">
 				<image :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" style="width: 100%;height:100%;" />
-				<view class="sex flex f-a-c f-j-c">
+				<view :class="{'gender flex f-a-c f-j-c':true, 'female': detail.gender === 2, 'male': detail.gender === 1}">
 					<img src="/static/images/sexMale.png" alt="" style="width: 90%;height:90%;" v-if="detail.gender === 1">
 					<img src="/static/images/sexFemale.png" alt="" style="width: 90%;height:90%;" v-if="detail.gender === 2">
 				</view>
@@ -25,10 +25,10 @@
 					<img :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" style="width:100%;height:100%;">
 				</view>
 				<view class="fs-26">{{detail.nickName}}</view>
-				<textarea name="" id="" class="mt-20" placeholder="打招呼~" placeholder-class="c-d"></textarea>
+				<textarea name="" id="" class="mt-20" placeholder="打招呼~" placeholder-class="c-d" v-model="msg"></textarea>
 				<view class="flex f-j-s btns">
 					<text class="btn1" @tap="addFriendAnimation('down')">取消</text>
-					<text class="btn2">发送</text>
+					<text class="btn2" @tap="handleSend">发送</text>
 				</view>
 			</view>
 		</view>
@@ -36,12 +36,14 @@
 </template>
 
 <script>
-	import { _detail } from '../../API/friendApi.js'
+	import { _detail, _apply } from '../../API/friendApi.js'
+	import { showToast } from '../../utils/util.js'
 	export default {
 		data() {
 			return {
 				userId: '',
 				detail: {},
+				msg: '',
 				animationData:{},
 				animationData2: {},
 				animationData3: {},
@@ -85,6 +87,13 @@
 					delay
 				})
 			},
+			handleSend() {
+				if(!this.msg) {
+					return showToast('请输入内容')
+				}else {
+					this.apply()
+				}
+			},
 			//----------------------api---------------------
 			async getDetail() {
 				const [err, data] = await this.$http({..._detail, data: {
@@ -92,6 +101,18 @@
 				}})
 				this.detail = data.detail
 			},
+			async apply() {
+				const [err, data] = await this.$http({..._apply, data: {
+					fid: this.userId,
+					msg: this.msg
+				}})
+				if(data.status === 200) {
+					showToast(data.message, 1, () => {
+						this.msg = '';
+						this.addFriendAnimation('down')
+					})
+				}
+			}
 		}
 	}
 </script>
@@ -134,14 +155,19 @@
 	border-radius: 48rpx;
 	border: 6rpx solid #fff;
 }
-.sex {
+.gender {
 	position: absolute;
 	right: 16rpx;
 	bottom: 16rpx;
 	width: 64rpx;
 	height: 64rpx;
 	border-radius: 50%;
+}
+.female {
 	background: $uni-color-error;
+}
+.male {
+	background: $uni-color-primary;
 }
 .des {
 	text-align: justify;

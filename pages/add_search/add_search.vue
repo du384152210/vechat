@@ -16,6 +16,7 @@
 						<view class="btn bg-4a-10 c-4a" v-else @tap="toFriendDetail(item._id)">加好友</view>
 					</view>
 				</view>
+				<view class="c-9 fs-16 t-c" v-if="empty && keyword" style="padding-top:30rpx;">用户不存在</view>
 			</view>
 			<view class="" style="padding: 17px 16px 0;" v-else>
 				<view class="fs-20 fw-b">群组</view>
@@ -43,7 +44,15 @@
 			return {
 				keyword: '',
 				list: [],
-				type: 1
+				type: 1,
+				empty: false
+			}
+		},
+		watch: {
+			keyword: function(oldVal, newVal) {
+				if(!newVal) {
+					this.empty = false
+				}
 			}
 		},
 		methods: {
@@ -63,6 +72,9 @@
 				const [err, data] = await this.$http({..._search, data: {
 					key: this.keyword
 				}})
+				if(data.list.length === 0) {
+					this.empty = true
+				}
 				this.list = data.list
 			}
 		}
