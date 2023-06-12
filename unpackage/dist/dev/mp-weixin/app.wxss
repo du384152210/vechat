@@ -4,7 +4,7 @@ body, html, page{
 	box-sizing: border-box;
 	height: 100vh;
 }
-view, scroll-view {
+view, scroll-view,textarea {
 	box-sizing: border-box;
 }
 a {
@@ -63,6 +63,9 @@ uni-app, uni-page, uni-page-wrapper, uni-page-body {
 }
 .fw-b {
 	font-weight: bold;
+}
+.c-white {
+	color: #fff;
 }
 .c-6 {
 	color: #666666;
@@ -128,6 +131,14 @@ uni-app, uni-page, uni-page-wrapper, uni-page-body {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+}
+.mask {
+	z-index: 100;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
 }
 /*每个页面公共css */
 page{--status-bar-height:25px;--top-window-height:0px;--window-top:0px;--window-bottom:0px;--window-left:0px;--window-right:0px;--window-magin:0px}[data-c-h="true"]{display: none !important;}

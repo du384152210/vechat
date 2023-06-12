@@ -6,7 +6,8 @@
     "pages/chat/chat",
     "pages/search/search",
     "pages/make_friends/make_friends",
-    "pages/personal/personal"
+    "pages/personal/personal",
+    "pages/add_search/add_search"
   ],
   "window": {
     "navigationBarTextStyle": "black",

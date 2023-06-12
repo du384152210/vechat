@@ -2,7 +2,6 @@
 const common_vendor = require("../common/vendor.js");
 const base_url = "http://localhost:3000";
 const http = (obj) => {
-  console.log(obj);
   return new Promise((resolve, reject) => {
     if (!obj.hideLoading) {
       common_vendor.index.showLoading({
@@ -25,9 +24,15 @@ const http = (obj) => {
             break;
           case 400:
             common_vendor.index.showToast({
-              title: res.data.msg,
+              title: res.data.message,
               icon: "none"
             });
+            break;
+          case 401:
+            common_vendor.index.navigateTo({
+              url: "/pages/login/login"
+            });
+            break;
           default:
             resolve([null, res.data]);
             break;

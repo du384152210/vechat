@@ -1,13 +1,22 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const API_friendApi = require("../../API/friendApi.js");
+const utils_util = require("../../utils/util.js");
 const _sfc_main = {
   data() {
     return {
+      userId: "",
+      detail: {},
+      msg: "",
       animationData: {},
       animationData2: {},
       animationData3: {},
       animationData4: {}
     };
+  },
+  onLoad(option) {
+    this.userId = option.id;
+    this.getDetail();
   },
   methods: {
     back() {
@@ -40,19 +49,61 @@ const _sfc_main = {
         timingFunction: "ease",
         delay
       });
+    },
+    handleSend() {
+      if (!this.msg) {
+        return utils_util.showToast("请输入内容");
+      } else {
+        this.apply();
+      }
+    },
+    //----------------------api---------------------
+    async getDetail() {
+      const [err, data] = await this.$http({ ...API_friendApi._detail, data: {
+        id: this.userId
+      } });
+      this.detail = data.detail;
+    },
+    async apply() {
+      const [err, data] = await this.$http({ ...API_friendApi._apply, data: {
+        fid: this.userId,
+        msg: this.msg
+      } });
+      if (data.status === 200) {
+        utils_util.showToast(data.message, 1, () => {
+          this.msg = "";
+          this.addFriendAnimation("down");
+        });
+      }
     }
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: common_vendor.o((...args) => $options.back && $options.back(...args)),
-    b: $data.animationData2,
-    c: common_vendor.o(($event) => $options.addFriendAnimation("up")),
-    d: $data.animationData3,
-    e: common_vendor.o(($event) => $options.addFriendAnimation("down")),
-    f: $data.animationData,
-    g: $data.animationData4
-  };
+  return common_vendor.e({
+    a: $data.detail.avatar ? $data.detail.avatar : "/static/images/avatar.png",
+    b: common_vendor.o((...args) => $options.back && $options.back(...args)),
+    c: $data.detail.avatar ? $data.detail.avatar : "/static/images/avatar.png",
+    d: $data.detail.gender === 1
+  }, $data.detail.gender === 1 ? {} : {}, {
+    e: $data.detail.gender === 2
+  }, $data.detail.gender === 2 ? {} : {}, {
+    f: $data.detail.gender === 2 ? 1 : "",
+    g: $data.detail.gender === 1 ? 1 : "",
+    h: $data.animationData2,
+    i: common_vendor.t($data.detail.nickName),
+    j: common_vendor.t($data.detail.email),
+    k: common_vendor.t($data.detail.signature ? $data.detail.signature : ""),
+    l: common_vendor.o(($event) => $options.addFriendAnimation("up")),
+    m: $data.detail.avatar ? $data.detail.avatar : "/static/images/avatar.png",
+    n: $data.animationData3,
+    o: common_vendor.t($data.detail.nickName),
+    p: $data.msg,
+    q: common_vendor.o(($event) => $data.msg = $event.detail.value),
+    r: common_vendor.o(($event) => $options.addFriendAnimation("down")),
+    s: common_vendor.o((...args) => $options.handleSend && $options.handleSend(...args)),
+    t: $data.animationData,
+    v: $data.animationData4
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__scopeId", "data-v-e19be651"], ["__file", "G:/personal/HBuilderProject/vechat/pages/make_friends/make_friends.vue"]]);
 wx.createPage(MiniProgramPage);

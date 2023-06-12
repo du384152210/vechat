@@ -60,14 +60,19 @@
   border-radius: 48rpx;
   border: 6rpx solid #fff;
 }
-.sex.data-v-e19be651 {
+.gender.data-v-e19be651 {
   position: absolute;
   right: 16rpx;
   bottom: 16rpx;
   width: 64rpx;
   height: 64rpx;
   border-radius: 50%;
+}
+.female.data-v-e19be651 {
   background: #ff5d5b;
+}
+.male.data-v-e19be651 {
+  background: #5799FF;
 }
 .des.data-v-e19be651 {
   text-align: justify;
@@ -85,19 +90,19 @@
   background: #ffe431;
   border-radius: 10rpx;
 }
-.mask.data-v-e19be651 {
+.pupMask.data-v-e19be651 {
   position: absolute;
   width: 100%;
   height: 100%;
   align-items: flex-end;
 }
-.mask .container.data-v-e19be651 {
+.pupMask .container.data-v-e19be651 {
   width: 100%;
   position: relative;
   border-radius: 40rpx 40rpx 0 0;
   padding: 168rpx 32rpx 8rpx;
 }
-.mask .container .avatar_box.data-v-e19be651 {
+.pupMask .container .avatar_box.data-v-e19be651 {
   opacity: 0;
   position: absolute;
   left: 60rpx;
@@ -109,7 +114,7 @@
   border-radius: 50%;
   overflow: hidden;
 }
-.mask .container textarea.data-v-e19be651 {
+.pupMask .container textarea.data-v-e19be651 {
   width: 100%;
   border-radius: 20rpx;
   padding: 20rpx;
@@ -117,20 +122,20 @@
   background: #F3F4F6;
   height: 520rpx;
 }
-.mask .container .btns.data-v-e19be651 {
+.pupMask .container .btns.data-v-e19be651 {
   margin-top: 90rpx;
 }
-.mask .container .btns text.data-v-e19be651 {
+.pupMask .container .btns text.data-v-e19be651 {
   padding: 18rpx 0;
   border-radius: 10rpx;
   font-size: 32rpx;
   text-align: center;
 }
-.mask .container .btns .btn1.data-v-e19be651 {
+.pupMask .container .btns .btn1.data-v-e19be651 {
   width: 172rpx;
   background: #ccc;
 }
-.mask .container .btns .btn2.data-v-e19be651 {
+.pupMask .container .btns .btn2.data-v-e19be651 {
   width: 480rpx;
   background: #ffe431;
 }

@@ -44,6 +44,47 @@ const formatDate = (d) => {
 	return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s
 }
 
+// 上传服务器
+const uploadFile = async(files) => {
+  let i = 0;
+  let resList = [];
+  while(i < files.length) {
+    wx.showLoading({
+      title: '加载中',
+    })
+    console.log(files);
+    let a = await new Promise((resolve, reject) => {
+	console.log(files[i]);
+      wx.uploadFile({
+        url: 'http://localhost:3000/upload',
+        filePath: files[i],
+        name: 'file',
+        success (res) {
+          ++i
+		  console.log(res)
+          resList.push(JSON.parse(res.data).src);
+          resolve(i)
+        },
+        fail (error) {
+          reject(error);
+        },
+        complete() {
+
+        }
+      })
+    })
+    i = a;
+  }
+  uni.hideLoading({
+    success: (res) => {
+      uni.showToast({
+        title: '上传成功',
+      })
+    },
+  })
+  return resList;
+}
+
 const showToast = (title, type, callback) => {
 	uni.showToast({
 		title,
@@ -59,5 +100,6 @@ const showToast = (title, type, callback) => {
 }
 export {
 	showToast,
-	formatDate
+	formatDate,
+	uploadFile
 }

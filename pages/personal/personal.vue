@@ -111,7 +111,7 @@
 
 <script>
 	import {_my, _update} from '../../API/myApi.js'
-	import {formatDate, showToast} from '../../utils/util.js'
+	import {formatDate, showToast, uploadFile} from '../../utils/util.js'
 	export default {
 		data() {
 			return {
@@ -147,12 +147,16 @@
 					success: (res) => {
 						console.log(res)
 						this.url = res.tempFiles[0].tempFilePath;
+						
 					}
 				})
+				
 			},
 			onok(ev) {
 				this.url = "";
 				this.path = ev.path;
+				console.log(ev.path)
+				uploadFile([ev.path])
 			},
 			oncancel() {
 				// url设置为空，隐藏控件

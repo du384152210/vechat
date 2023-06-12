@@ -10,6 +10,7 @@ if (!Math) {
   "./pages/search/search.js";
   "./pages/make_friends/make_friends.js";
   "./pages/personal/personal.js";
+  "./pages/add_search/add_search.js";
 }
 const _sfc_main = {
   onLaunch: function() {
