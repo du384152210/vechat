@@ -53,6 +53,7 @@
 				if(data.status === 200) {
 					showToast(data.message, 1);
 					uni.setStorageSync('token', data.token);
+					uni.setStorageSync('id', data.id);
 					setTimeout(()=> {
 						uni.navigateBack()
 					},500)

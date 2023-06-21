@@ -5,10 +5,10 @@ const utils_util = require("../../utils/util.js");
 const _sfc_main = {
   data() {
     return {
-      url: "",
       detail: {},
+      avatar: "",
       gender: ["保密", "男", "女"],
-      foucus: false,
+      focus: false,
       nickName: "",
       signature: "",
       birthday: "",
@@ -24,37 +24,30 @@ const _sfc_main = {
     this.getData();
   },
   methods: {
-    // 修改图像
-    updateAvatar() {
-      common_vendor.index.chooseMedia({
-        count: 1,
-        mediaType: ["image"],
-        sourceType: ["album", "camera"],
-        maxDuration: 30,
-        camera: "back",
-        success: (res) => {
-          console.log(res);
-          this.url = res.tempFiles[0].tempFilePath;
-        }
+    // 剪切图片
+    async updateAvatar() {
+      const img = await utils_util.chooseMedia(["image"], 1);
+      const res = await utils_util.uploadFile([img.tempFilePath]);
+      this.avatar = res[0];
+      this.update("avatar");
+    },
+    // 预览
+    previewImg(url) {
+      common_vendor.index.previewImage({
+        urls: [url],
+        current: url
       });
-    },
-    onok(ev) {
-      this.url = "";
-      this.path = ev.path;
-      console.log(ev.path);
-      utils_util.uploadFile([ev.path]);
-    },
-    oncancel() {
-      this.url = "";
     },
     // 修改昵称
     showPup(option) {
       this.$refs[option].open();
       this[option] = this.detail[option];
+      this.focus = true;
       console.log(this[option]);
     },
     closePup(option) {
       this.$refs[option].close();
+      this.focus = false;
     },
     clearInput(str) {
       this[str] = "";
@@ -85,7 +78,7 @@ const _sfc_main = {
       });
       if (data.status === 200) {
         utils_util.showToast(data.message, 1, () => {
-          this.$refs[option].close();
+          this.$refs[option] && this.$refs[option].close();
           this.getData();
         });
       }
@@ -93,90 +86,81 @@ const _sfc_main = {
   }
 };
 if (!Array) {
-  const _easycom_ksp_cropper2 = common_vendor.resolveComponent("ksp-cropper");
   const _easycom_uni_popup2 = common_vendor.resolveComponent("uni-popup");
   const _easycom_uni_datetime_picker2 = common_vendor.resolveComponent("uni-datetime-picker");
-  (_easycom_ksp_cropper2 + _easycom_uni_popup2 + _easycom_uni_datetime_picker2)();
+  (_easycom_uni_popup2 + _easycom_uni_datetime_picker2)();
 }
-const _easycom_ksp_cropper = () => "../../uni_modules/ksp-cropper/components/ksp-cropper/ksp-cropper.js";
 const _easycom_uni_popup = () => "../../uni_modules/uni-popup/components/uni-popup/uni-popup.js";
 const _easycom_uni_datetime_picker = () => "../../uni_modules/uni-datetime-picker/components/uni-datetime-picker/uni-datetime-picker.js";
 if (!Math) {
-  (_easycom_ksp_cropper + _easycom_uni_popup + _easycom_uni_datetime_picker)();
+  (_easycom_uni_popup + _easycom_uni_datetime_picker)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: $data.detail.avatar ? $data.detail.avatar : "/static/images/avatar.png",
-    b: common_vendor.o((...args) => $options.updateAvatar && $options.updateAvatar(...args)),
-    c: common_vendor.t($data.detail.signature),
-    d: common_vendor.o(($event) => $options.showPup("signature")),
-    e: common_vendor.t($data.detail.createTime),
-    f: common_vendor.t($data.detail.nickName),
-    g: common_vendor.o(($event) => $options.showPup("nickName")),
-    h: common_vendor.t($data.gender[$data.detail.gender]),
-    i: common_vendor.t($data.detail.birthday),
-    j: common_vendor.o(($event) => $options.showPup("birthday")),
-    k: common_vendor.t($data.detail.phone),
-    l: common_vendor.o(($event) => $options.showPup("phone")),
-    m: common_vendor.t($data.detail.email),
-    n: common_vendor.o($options.oncancel),
-    o: common_vendor.o($options.onok),
-    p: common_vendor.p({
-      mode: "free",
-      width: 200,
-      height: 140,
-      maxWidth: 1024,
-      maxHeight: 1024,
-      url: $data.url
-    }),
-    q: common_vendor.o(($event) => $options.closePup("nickName")),
-    r: $data.nickName && $data.nickName !== $data.detail.nickName ? 1 : "",
-    s: common_vendor.o(($event) => $options.pupSubmit("nickName")),
-    t: $data.nickName
+    b: common_vendor.o(($event) => $options.previewImg($data.detail.avatar)),
+    c: common_vendor.o((...args) => $options.updateAvatar && $options.updateAvatar(...args)),
+    d: common_vendor.t($data.detail.signature),
+    e: common_vendor.o(($event) => $options.showPup("signature")),
+    f: common_vendor.t($data.detail.createTime),
+    g: common_vendor.t($data.detail.nickName),
+    h: common_vendor.o(($event) => $options.showPup("nickName")),
+    i: common_vendor.t($data.gender[$data.detail.gender]),
+    j: common_vendor.t($data.detail.birthday),
+    k: common_vendor.o(($event) => $options.showPup("birthday")),
+    l: common_vendor.t($data.detail.phone),
+    m: common_vendor.o(($event) => $options.showPup("phone")),
+    n: common_vendor.t($data.detail.email),
+    o: common_vendor.o(($event) => $options.closePup("nickName")),
+    p: $data.nickName && $data.nickName !== $data.detail.nickName ? 1 : "",
+    q: common_vendor.o(($event) => $options.pupSubmit("nickName")),
+    r: $data.nickName
   }, $data.nickName ? {
-    v: common_vendor.o(($event) => $options.clearInput("nickName"))
+    s: common_vendor.o(($event) => $options.clearInput("nickName"))
   } : {}, {
-    w: $data.nickName,
-    x: common_vendor.o(($event) => $data.nickName = $event.detail.value),
-    y: common_vendor.sr("nickName", "29be9066-1"),
-    z: common_vendor.p({
+    t: $data.focus,
+    v: $data.nickName,
+    w: common_vendor.o(($event) => $data.nickName = $event.detail.value),
+    x: common_vendor.sr("nickName", "29be9066-0"),
+    y: common_vendor.p({
       ["background-color"]: "#fff",
       type: "bottom"
     }),
-    A: common_vendor.o(($event) => $options.closePup("birthday")),
-    B: $data.birthday && $data.birthday !== $data.detail.birthday ? 1 : "",
-    C: common_vendor.o(($event) => $options.pupSubmit("birthday")),
-    D: common_vendor.o($options.birthdayChange),
-    E: common_vendor.p({
+    z: common_vendor.o(($event) => $options.closePup("birthday")),
+    A: $data.birthday && $data.birthday !== $data.detail.birthday ? 1 : "",
+    B: common_vendor.o(($event) => $options.pupSubmit("birthday")),
+    C: common_vendor.o($options.birthdayChange),
+    D: common_vendor.p({
       type: "date",
       value: $data.birthday
     }),
-    F: common_vendor.sr("birthday", "29be9066-2"),
-    G: common_vendor.p({
+    E: common_vendor.sr("birthday", "29be9066-1"),
+    F: common_vendor.p({
       ["background-color"]: "#fff",
       type: "bottom"
     }),
-    H: common_vendor.o(($event) => $options.closePup("signature")),
-    I: $data.signature && $data.signature !== $data.detail.signature ? 1 : "",
-    J: common_vendor.o(($event) => $options.pupSubmit("signature")),
-    K: $data.foucus,
-    L: $data.signature,
-    M: common_vendor.o(($event) => $data.signature = $event.detail.value),
-    N: common_vendor.sr("signature", "29be9066-4"),
-    O: common_vendor.p({
+    G: common_vendor.o(($event) => $options.closePup("signature")),
+    H: $data.signature && $data.signature !== $data.detail.signature ? 1 : "",
+    I: common_vendor.o(($event) => $options.pupSubmit("signature")),
+    J: $data.focus,
+    K: $data.signature,
+    L: common_vendor.o(($event) => $data.signature = $event.detail.value),
+    M: common_vendor.sr("signature", "29be9066-3"),
+    N: common_vendor.p({
       ["background-color"]: "#fff",
       type: "bottom"
     }),
-    P: common_vendor.o(($event) => $options.closePup("phone")),
-    Q: $data.phone && $data.phone !== $data.detail.phone ? 1 : "",
-    R: common_vendor.o(($event) => $options.pupSubmit("phone")),
-    S: $data.phone
+    O: common_vendor.o(($event) => $options.closePup("phone")),
+    P: $data.phone && $data.phone !== $data.detail.phone ? 1 : "",
+    Q: common_vendor.o(($event) => $options.pupSubmit("phone")),
+    R: $data.phone
   }, $data.phone ? {
-    T: common_vendor.o(($event) => $options.clearInput("phone"))
+    S: common_vendor.o(($event) => $options.clearInput("phone"))
   } : {}, {
+    T: $data.focus,
     U: $data.phone,
     V: common_vendor.o(($event) => $data.phone = $event.detail.value),
-    W: common_vendor.sr("phone", "29be9066-5"),
+    W: common_vendor.sr("phone", "29be9066-4"),
     X: common_vendor.p({
       ["background-color"]: "#fff",
       type: "bottom"

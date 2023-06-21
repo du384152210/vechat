@@ -4,39 +4,39 @@
 			<view class="flex row f-j-s f-a-c" style="padding:20rpx 32rpx;" @click="updateAvatar">
 				<view class="flex f-a-c">
 					<text class="fs-16">头像</text>
-					<img :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" class="avatar">
+					<image :src="detail.avatar ? detail.avatar : '/static/images/avatar.png'" alt="" class="avatar" @click.stop="previewImg(detail.avatar)"/>
 				</view>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 			<view class="flex row f-j-s f-a-c" @tap="showPup('signature')">
 				<text class="fs-16 mr-16">签名</text>
 				<text class="flex1 ellipsis c-9">{{detail.signature}}</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 			<view class="flex row f-j-s f-a-c">
 				<text class="fs-16 mr-16">注册</text>
 				<text class="flex1 ellipsis c-9">{{detail.createTime}}</text>
-				<!-- <img src="/static/images/arrow.png" alt="" class="arrow"> -->
+				<!-- <image src="/static/images/arrow.png" alt="" class="arrow"> -->
 			</view>
 			<view class="flex row f-j-s f-a-c" @tap="showPup('nickName')">
 				<text class="fs-16 mr-16">昵称</text>
 				<text class="flex1 ellipsis c-9">{{detail.nickName}}</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 			<view class="flex row f-j-s f-a-c">
 				<text class="fs-16 mr-16">性别</text>
 				<text class="flex1 ellipsis c-9">{{gender[detail.gender]}}</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 			<view class="flex row f-j-s f-a-c" @tap="showPup('birthday')">
 				<text class="fs-16 mr-16">生日</text>
 				<text class="flex1 ellipsis c-9" >{{detail.birthday}}</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 			<view class="flex row f-j-s f-a-c" @tap="showPup('phone')">
 				<text class="fs-16 mr-16">电话</text>
 				<text class="flex1 ellipsis c-9">{{detail.phone}}</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 			<view class="flex row f-j-s f-a-c">
 				<text class="fs-16 mr-16">邮箱</text>
@@ -45,12 +45,12 @@
 			<view class="flex row f-j-s f-a-c">
 				<text class="fs-16 mr-16">密码</text>
 				<text class="flex1 ellipsis c-9">.....</text>
-				<img src="/static/images/arrow.png" alt="" class="arrow">
+				<image src="/static/images/arrow.png" alt="" class="arrow" />
 			</view>
 		</view>
 		<view class="c-ff5 fs-16 t-c mt-40">设置</view>
 	</view>
-	<ksp-cropper mode="free" :width="200" :height="140" :maxWidth="1024" :maxHeight="1024" :url="url" @cancel="oncancel" @ok="onok"></ksp-cropper>
+	
 
 	<uni-popup ref="nickName" background-color="#fff" type="bottom">
 		<view class="popup-content">
@@ -61,7 +61,7 @@
 			</view>
 			<view class="input">
 				<image src="/static/images/delete.png" class="clearBtn" v-if="nickName" @tap="clearInput('nickName')"></image>
-				<input type="text" focus v-model="nickName" maxlength="15">
+				<input type="text" :focus="focus" v-model="nickName" maxlength="15">
 			</view>
 		</view>
 	</uni-popup>
@@ -89,8 +89,7 @@
 				<view :class="{'btn': true, 'active': signature && signature !== detail.signature}" @tap="pupSubmit('signature')">完成</view>
 			</view>
 			<view class="input" >
-				<!-- <image src="/static/images/delete.png" class="clearBtn" v-if="signature" @tap="clearInput('signature')"></image> -->
-				<textarea type="text" :focus="foucus" v-model="signature"></textarea>
+				<textarea type="text" :focus="focus" v-model="signature"></textarea>
 			</view>
 		</view>
 	</uni-popup>
@@ -103,7 +102,7 @@
 			</view>
 			<view class="input">
 				<image src="/static/images/delete.png" class="clearBtn" v-if="phone" @tap="clearInput('phone')"></image>
-				<input type="text" focus v-model="phone">
+				<input type="text" :focus="focus" v-model="phone">
 			</view>
 		</view>
 	</uni-popup>
@@ -111,14 +110,14 @@
 
 <script>
 	import {_my, _update} from '../../API/myApi.js'
-	import {formatDate, showToast, uploadFile} from '../../utils/util.js'
+	import {formatDate, showToast, uploadFile, chooseMedia} from '../../utils/util.js'
 	export default {
 		data() {
 			return {
-				url: '',
 				detail: {},
+				avatar: '',
 				gender: ["保密", "男", "女"],
-				foucus: false,
+				focus: false,
 				nickName: '',
 				signature: '',
 				birthday: '',
@@ -136,40 +135,30 @@
 			this.getData()
 		},
 		methods: {
-			// 修改图像
-			updateAvatar() {
-				uni.chooseMedia({
-					count: 1,
-					mediaType: ['image'],
-					sourceType: ['album', 'camera'],
-					maxDuration: 30,
-					camera: 'back',
-					success: (res) => {
-						console.log(res)
-						this.url = res.tempFiles[0].tempFilePath;
-						
-					}
+			// 剪切图片
+			async updateAvatar() {
+				const img = await chooseMedia(['image'],1)
+				const res = await uploadFile([img.tempFilePath])
+				this.avatar = res[0]
+				this.update('avatar')
+			},
+			// 预览
+			previewImg(url) {
+				uni.previewImage({
+					urls:[url],
+					current: url
 				})
-				
-			},
-			onok(ev) {
-				this.url = "";
-				this.path = ev.path;
-				console.log(ev.path)
-				uploadFile([ev.path])
-			},
-			oncancel() {
-				// url设置为空，隐藏控件
-				this.url = "";
 			},
 			// 修改昵称
 			showPup(option) {
 				this.$refs[option].open()
 				this[option] = this.detail[option]
+				this.focus = true
 				console.log(this[option])
 			},
 			closePup(option) {
 				this.$refs[option].close()
+				this.focus = false
 			},
 			clearInput(str) {
 				this[str] = ''
@@ -199,7 +188,7 @@
 				}))
 				if(data.status === 200) {
 					showToast(data.message,1,() => {
-						this.$refs[option].close()
+						this.$refs[option] && this.$refs[option].close()
 						this.getData()
 					})
 				}
@@ -213,14 +202,12 @@
 		padding: 32rpx;
 		border-bottom: 2rpx dashed #dddddd;
 	}
-
 	.avatar {
 		width: 108rpx;
 		height: 108rpx;
 		border-radius: 20rpx;
 		margin-left: 32rpx;
 	}
-
 	.arrow {
 		width: 28rpx;
 		height: 28rpx;
@@ -266,9 +253,5 @@
 				height: 32rpx;
 			}
 		}
-		
-	}
-	.uni-calendar--ani-show {
-		transform: translateY(50px)!important;
 	}
 </style>

@@ -36,16 +36,17 @@
 </template>
 
 <script>
+	import { _list } from '../../API/friendApi.js'
 	export default {
 		data() {
 			return {
 				title: 'Hello',
-				animationData:{},
+				animationData: {},
 				isShow: false
 			}
 		},
 		onLoad() {
-
+			this.getList()
 		},
 		onHide() {
 			this.hideAdd()
@@ -89,6 +90,14 @@
 					timingFunction: "ease",
 					delay
 				})
+			},
+			//-------------------------------api------------------------
+			async getList() {
+				const uid = uni.getStorageSync('id');
+				const [err, data] = await this.$http({..._list, data: {
+					uid, state: 2
+				}})
+				console.log(data)
 			}
 		}
 	}

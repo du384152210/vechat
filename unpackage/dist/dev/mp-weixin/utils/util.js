@@ -48,6 +48,24 @@ const uploadFile = async (files) => {
   });
   return resList;
 };
+const chooseMedia = (mediaType, count) => {
+  return new Promise((resolve, reject) => {
+    common_vendor.index.chooseMedia({
+      count,
+      mediaType,
+      sourceType: ["album", "camera"],
+      maxDuration: 30,
+      camera: "back",
+      success: (res) => {
+        if (count === 1) {
+          resolve(res.tempFiles[0]);
+        } else {
+          resolve(res.tempFiles);
+        }
+      }
+    });
+  });
+};
 const showToast = (title, type, callback) => {
   common_vendor.index.showToast({
     title,
@@ -61,6 +79,7 @@ const showToast = (title, type, callback) => {
     }
   });
 };
+exports.chooseMedia = chooseMedia;
 exports.formatDate = formatDate;
 exports.showToast = showToast;
 exports.uploadFile = uploadFile;

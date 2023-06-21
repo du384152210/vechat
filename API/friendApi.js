@@ -6,8 +6,13 @@ const _apply = {
 	url: '/friend/apply',
 	method: 'POST'
 }
+const _list = {
+	url: '/friend/list',
+	method: 'GET'
+}
 
 export {
 	_detail,
-	_apply
+	_apply,
+	_list
 }

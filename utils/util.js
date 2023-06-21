@@ -85,6 +85,26 @@ const uploadFile = async(files) => {
   return resList;
 }
 
+const chooseMedia = (mediaType, count) => {
+	return new Promise((resolve, reject) => {
+		uni.chooseMedia({
+			count,
+			mediaType,
+			sourceType: ['album', 'camera'],
+			maxDuration: 30,
+			camera: 'back',
+			success: (res) => {
+				if(count === 1) {
+					resolve(res.tempFiles[0])
+				}else {
+					resolve(res.tempFiles)
+				}
+			}
+		})
+	})
+}
+
+
 const showToast = (title, type, callback) => {
 	uni.showToast({
 		title,
@@ -101,5 +121,6 @@ const showToast = (title, type, callback) => {
 export {
 	showToast,
 	formatDate,
-	uploadFile
+	uploadFile,
+	chooseMedia
 }
