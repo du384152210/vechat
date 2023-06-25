@@ -10,11 +10,11 @@ const compareDate = (d) => {
 	let D = old.getDate() - 2;
 	
 	let newDate = old.getTime();
-	let nh = old.getHours();
-	let nm = old.getMinutes();
-	let nY = old.getFullYear();
-	let nM = old.getMonth() + 1;
-	let nD = old.getDate();
+	let nh = now.getHours();
+	let nm = now.getMinutes();
+	let nY = now.getFullYear();
+	let nM = now.getMonth() + 1;
+	let nD = now.getDate();
 	
 	h = h < 10 ? '0' + h : h;
 	m = m < 10 ? '0' + m : m;
@@ -24,7 +24,7 @@ const compareDate = (d) => {
 	}
 	// 前天
 	if(D+1 === nD && M === nM && Y === nY) {
-		return '前天' + h+':'+m
+		return '昨天' + h+':'+m
 	}
 	// 大于两天
 	else {
@@ -119,6 +119,7 @@ const showToast = (title, type, callback) => {
 	})
 }
 export {
+	compareDate,
 	showToast,
 	formatDate,
 	uploadFile,

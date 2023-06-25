@@ -17,17 +17,17 @@
 			</view>
 		</view>
 		<scroll-view scroll-y class="list">
-			<view class="item flex f-a-c" @click="toChat">
+			<view class="item flex f-a-c" @click="toChat" v-for="item in msgList" :key="item.id">
 				<view style="position: relative;" class="mr-16">
-					<image src="/static/images/avatar.png" alt="" class="list_avatar" />
-					<text class="num">2</text>
+					<image :src="item.avatar" alt="" class="list_avatar" />
+					<text class="num" v-show="item.tip > 0">{{item.tip}}</text>
 				</view>
-				<view class="flex1">
+				<view class="flex1 right_part">
 					<view class="flex f-j-s f-a-c">
-						<text class="fs-18">好友请求</text>
-						<text class="fs-12 c-9">上午7:45</text>
+						<text class="fs-16">{{item.name}}</text>
+						<text class="fs-12 c-9">{{item.lastTime}}</text>
 					</view>
-					<text class="fs-14 c-6">就是你的那额，不用点开始速</text>
+					<view class="fs-14 c-6 ellipsis text">{{item.msg}}</view>
 				</view>
 			</view>
 		</scroll-view>
@@ -36,16 +36,21 @@
 </template>
 
 <script>
-	import { _list } from '../../API/friendApi.js'
+	import { _list } from '../../API/msgApi.js'
+	import { compareDate } from '../../utils/util.js'
 	export default {
 		data() {
 			return {
 				title: 'Hello',
 				animationData: {},
-				isShow: false
+				isShow: false,
+				msgList: []
 			}
 		},
 		onLoad() {
+			
+		},
+		onShow() {
 			this.getList()
 		},
 		onHide() {
@@ -95,9 +100,12 @@
 			async getList() {
 				const uid = uni.getStorageSync('id');
 				const [err, data] = await this.$http({..._list, data: {
-					uid, state: 2
+					uid
 				}})
-				console.log(data)
+				data.list.forEach(item => {
+					item.lastTime = compareDate(item.lastTime)
+				})
+				this.msgList = data.list
 			}
 		}
 	}
@@ -132,9 +140,17 @@
 	.item {
 		padding: 20rpx 32rpx;
 		.list_avatar {
+			background: #ccc;
 			width: 96rpx;
 			height: 96rpx;
 			border-radius: 24rpx;
+		}
+		.right_part {
+			border-bottom: 2rpx solid rgba(0, 0, 0, .1);
+			padding-bottom: 20rpx;
+			.text {
+				width: 90%;
+			}
 		}
 		.num {
 			position: absolute;
